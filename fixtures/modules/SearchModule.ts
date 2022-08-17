@@ -1,6 +1,5 @@
 import { expect, Page } from "@playwright/test";
 import { CATALOG, SEARCH, SEARCH_TEXT_ATTRIBUTE } from "../selectorsData";
-import { SEARCH_INPUT_EXPECT, SEARCH_TEXT_EXPECT, SEARCH_TEXT_EXPECT_NEG } from "../expectationsData";
 
 export class SearchModule {
     private page: Page;
@@ -8,20 +7,17 @@ export class SearchModule {
         this.page = page;
     }
 
-    async searchTextCheck() {
+    async searchTextCheck(value: string) {
         const searchText = await this.page.locator(SEARCH).getAttribute(SEARCH_TEXT_ATTRIBUTE);
-        expect(searchText).toContain(SEARCH_TEXT_EXPECT);
+        expect(searchText).toContain(value);
     }
-    async searchTextCheckNeg() {
-        const searchText = await this.page.locator(SEARCH).getAttribute(SEARCH_TEXT_ATTRIBUTE);
-        expect(searchText).toContain(SEARCH_TEXT_EXPECT_NEG);
+    async searchInputType(value: string) {
+        await this.page.type(SEARCH, value);
     }
     async searchInputCheck() {
-        await this.page.type(SEARCH, SEARCH_INPUT_EXPECT);
         await this.page.isVisible(CATALOG);
     }
     async searchInputCheckNeg() {
-        await this.page.type(SEARCH, SEARCH_INPUT_EXPECT);
         await this.page.isHidden(CATALOG);
     }
 }

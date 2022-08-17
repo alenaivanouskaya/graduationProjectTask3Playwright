@@ -1,5 +1,4 @@
 import { expect, Page } from "@playwright/test";
-import { URL, URL_NEG } from "../linksData";
 
 export class URLModule {
     private page: Page;
@@ -7,12 +6,8 @@ export class URLModule {
         this.page = page;
     }
 
-    async urlCheck() {
+    async urlCheck(value: string) {
         const CURRENT_URL = this.page.url();
-        expect(CURRENT_URL).toContain(URL);
-    }
-    async urlCheckNeg() {
-        const CURRENT_URL = this.page.url();
-        expect(CURRENT_URL).toContain(URL_NEG);
+        expect(CURRENT_URL).toContain(value);
     }
 }
